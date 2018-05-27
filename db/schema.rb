@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_27_113230) do
+ActiveRecord::Schema.define(version: 2018_05_27_113235) do
 
   create_table "users", force: :cascade do |t|
     t.string "FirstName"
     t.string "LastName"
     t.integer "Age"
     t.string "MailAddress"
-    t.string "DeleteFlag", default: "0"
+    t.integer "DeleteFlag", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
