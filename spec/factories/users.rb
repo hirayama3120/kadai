@@ -33,3 +33,24 @@ FactoryBot.define do
     MailAddress "ccccc@ddddd"
   end
 end
+
+#FactoryBot.define do
+#  factory :users_create do
+#    profile {
+#      {
+#        FirstName: FirstName,
+#        LastName: LastName,
+#				Age: Age,
+#				MailAddress: MailAddress
+#      }
+3
+#    }
+#  end
+
+#  transient do
+#    FirstName "aaaaa"
+#    LastName "bbbbb"
+#    Age 20
+#    MailAddress "ccccc@ddddd"
+#  end
+#end

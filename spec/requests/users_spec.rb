@@ -39,18 +39,48 @@ RSpec.describe "Users", type: :request do
   end
 end
 
-describe "POST /api/users" do
-  before do
-    @params = FactoryBot.attributes_for(:users_create)
-  end
+#describe "POST /api/users" do
+#  before do
+#    #@params = FactoryBot.attributes_for(:users_create)
+#    @params = FactoryBot.create(:users_create)
+#  end
+#
+#  it '200応答チェック' do
+#    #post "/api/users", :user @params, :FirstName @params[:FirstName], :LastName @params[:LastName], :Age @params[:Age], :MailAddress @params[:MailAddress]
+#    post "/api/users", user: @params
+#    expect(response).to be_success
+#    expect(response.status).to eq 200
+#  end
+#
+#  it 'Userレコードが1増える' do
+#    expect { post api_users_path, @params }.to change(User, :count).by(1)
+#  end
+#end
 
-  it '200応答チェック' do
-    post api_users_path, @params
-    expect(response).to be_success
-    expect(response.status).to eq 200
-  end
 
-  it 'Userレコードが1増える' do
-    expect { post api_users_path, @params }.to change(User, :count).by(1)
+RSpec.describe "Users", type: :request do
+  let(:user) { create(:user) }
+
+  describe 'Post #create' do
+    let(:param) do
+      {
+        users: {
+          FirstName: "aaaaa",
+          LastName: "bbbbb",
+          Age: 20,
+          MailAddress: "ccccc@ddddd"
+        }
+      }
+    end
+
+    context 'when send correct parameters' do
+      let(:http_response) do
+        post "/api/users", params: param
+      end
+
+      it 'responds status "200 OK"' do
+        expect(response.status).to eq 200
+      end
+    end
   end
 end
