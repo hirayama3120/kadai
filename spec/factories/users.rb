@@ -5,10 +5,8 @@ FactoryBot.define do
     Age 20
     MailAddress "ccccc@ddddd"
     DeleteFlag 0
-  end
-end
-  
-FactoryBot.define do
+	end
+	
   factory :users_index_1, class: User do
     FirstName "FirstName1"
     LastName "LastName1"
@@ -23,4 +21,15 @@ FactoryBot.define do
     MailAddress "address@2"
     DeleteFlag 0
   end
+
+  factory :takashi, class: User do
+	  name "Takashi"
+	  email "takashi@example.com"
+  end
+
+  factory :satoshi, class: User do
+	  name "Satoshi"
+	  email "satoshi@example.com"
+	end
+	
 end

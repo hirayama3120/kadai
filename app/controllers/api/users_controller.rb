@@ -35,8 +35,12 @@ module Api
     end
 
     # DELETE /users/1
-    def destroy
-      @user.destroy
+    def do_inactive
+      if @user.do_inactive(user_params)
+        render json: @user
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
     end
 
     private

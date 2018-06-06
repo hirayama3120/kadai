@@ -53,5 +53,34 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "PUT /api/users/:id" do
+    let(:users_index_1) { create :users_index_1 }
+
+    it 'リクエストが成功すること' do
+      put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+      expect(response.status).to eq 200
+    end
+
+    it 'ユーザー名が更新されること' do
+      expect do
+        put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+      end.to change { User.find(users_index_1.id).FirstName }.from('FirstName1').to('FirstName2')
+    end
+  end
+
+  describe "DELETE /api/users/:id" do
+    let(:users_index_1) { create :users_index_1 }
+
+    it 'リクエストが成功すること' do
+      put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+      expect(response.status).to eq 200
+    end
+
+    it 'ユーザー名が更新されること' do
+      expect do
+        put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+      end.to change { User.find(users_index_1.id).DeleteFlag }.from('0').to('1')
+    end
+  end
 
 end
