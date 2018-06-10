@@ -1,6 +1,6 @@
 module Api
   class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :destroy]
+    before_action :set_user, only: [:show, :update, :do_inactive]
 
     # GET /users
     def index
@@ -36,7 +36,7 @@ module Api
 
     # DELETE /users/1
     def do_inactive
-      if @user.do_inactive(user_params)
+      if @user.do_inactive(@delete_user, DeleteFlag: 1)
         render json: @user
       else
         render json: @user.errors, status: :unprocessable_entity
@@ -52,6 +52,11 @@ module Api
       # Only allow a trusted parameter "white list" through.
       def user_params
         params.fetch(:user, {}).permit(:FirstName, :LastName, :Age, :MailAddress)
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def set_delete_user
+        @delete_user = User.find(params[:id])
       end
   end
 end

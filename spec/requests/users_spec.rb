@@ -72,13 +72,13 @@ RSpec.describe "Users", type: :request do
     let(:users_index_1) { create :users_index_1 }
 
     it 'リクエストが成功すること' do
-      put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+      delete "/api/users" + "/" + users_index_1.id.to_s
       expect(response.status).to eq 200
     end
 
     it 'ユーザー名が更新されること' do
       expect do
-        put "/api/users" + "/" + users_index_1.id.to_s, params: { id: users_index_1, user: attributes_for(:users_index_2) }
+        delete "/api/users" + "/" + users_index_1.id.to_s
       end.to change { User.find(users_index_1.id).DeleteFlag }.from('0').to('1')
     end
   end
