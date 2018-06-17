@@ -73,13 +73,13 @@ RSpec.describe "Users", type: :request do
 
     it 'リクエストが成功すること' do
       delete "/api/users" + "/" + users_index_1.id.to_s
-      expect(response.status).to eq 200
+      expect(response.status).to eq 204
     end
 
     it 'ユーザー名が更新されること' do
       expect do
         delete "/api/users" + "/" + users_index_1.id.to_s
-      end.to change { User.find(users_index_1.id).DeleteFlag }.from('0').to('1')
+      end.to change { User.find(users_index_1.id).DeleteFlag }.from(0).to(1)
     end
   end
 
