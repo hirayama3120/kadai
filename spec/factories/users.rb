@@ -7,6 +7,30 @@ FactoryBot.define do
     DeleteFlag 0
 	end
 	
+	factory :firstname_brank do
+    #FirstName "aaaaa"
+    LastName "bbbbb"
+    Age 20
+    MailAddress "ccccc@ddddd"
+    DeleteFlag 0
+	end
+
+	factory :lastname_brank do
+    FirstName "aaaaa"
+    #LastName "bbbbb"
+    Age 20
+    MailAddress "ccccc@ddddd"
+    DeleteFlag 0
+	end
+
+	factory :mailaddress_brank do
+    FirstName "aaaaa"
+    LastName "bbbbb"
+    Age 20
+    #MailAddress "ccccc@ddddd"
+    DeleteFlag 0
+	end
+
   factory :users_index_1, class: User do
     FirstName "FirstName1"
     LastName "LastName1"
