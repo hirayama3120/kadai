@@ -32,7 +32,6 @@ RSpec.describe "Users", type: :request do
       it '404応答確認' do
         expect(response.status).to eq 404
       end
-
     end
   end
  
@@ -62,6 +61,11 @@ RSpec.describe "Users", type: :request do
         post "/api/users", params: { user: attributes_for(:user) }
         expect(response).to be_successful
         expect(response.status).to eq 200
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 200
+        expect(json["message"]).to eq 'Success User Create'  
       end
  
       it 'Userレコード登録確認' do
@@ -71,14 +75,32 @@ RSpec.describe "Users", type: :request do
  
     context '異常系' do
       it '400応答確認' do
+        #パラメータチェック FirstName
         post "/api/users", params: { firstname_brank: attributes_for(:user) }
         expect(response.status).to eq 400
- 
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 400    
+        expect(json["message"]).to eq 'Bad Request'  
+
+        #パラメータチェック LastName
         post "/api/users", params: { lastname_brank: attributes_for(:user) }
         expect(response.status).to eq 400
- 
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 400    
+        expect(json["message"]).to eq 'Bad Request'  
+
+        #パラメータチェック MailAddress
         post "/api/users", params: { mailaddress_brank: attributes_for(:user) }
         expect(response.status).to eq 400
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 400    
+        expect(json["message"]).to eq 'Bad Request'  
       end
  
       it '409応答確認' do      
@@ -86,6 +108,11 @@ RSpec.describe "Users", type: :request do
         expect(response.status).to eq 200
         post "/api/users", params: { user: attributes_for(:user) }
         expect(response.status).to eq 409
+        
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 409    
+        expect(json["message"]).to eq 'User Conflict'  
       end
     end
   end
@@ -110,6 +137,11 @@ RSpec.describe "Users", type: :request do
       it '404応答確認' do
         put "/api/users" + "/" + "1", params: { id: 1, user: attributes_for(:users_index_2) }
         expect(response.status).to eq 404
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 404    
+        expect(json["message"]).to eq 'User Not Found'  
       end
     end
   end
@@ -134,6 +166,11 @@ RSpec.describe "Users", type: :request do
       it '404応答確認' do
         delete "/api/users" + "/" + "1"
         expect(response.status).to eq 404
+
+        json = JSON.parse(response.body)
+        expect(json.size).to       eq 2
+        expect(json["status"]).to  eq 404    
+        expect(json["message"]).to eq 'User Not Found'  
       end
     end
   end
