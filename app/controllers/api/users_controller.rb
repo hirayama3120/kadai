@@ -42,21 +42,21 @@ module Api
     end
 
     # DELETE /api/users/:id
-#    def do_inactive
-#      #if @user.do_inactive(@delete_user, DeleteFlag: 1)
-#      if @user.do_inactive(@delete_user, DeleteFlag: 1)
-#        render json: @user
-#      else
-#        render json: @user.errors, status: :unprocessable_entity
-#      end
-#    end
     def do_inactive
-      if @user.do_inactive
-        response_success(:user, :update)
+      if @user.do_inactive(@delete_user)
+        response_success(:user, :do_inactive)
       else
         response_internal_server_error
       end
     end
+
+#    def do_inactive
+#      if @user.do_inactive
+#        response_success(:user, :update)
+#      else
+#        response_internal_server_error
+#      end
+#    end
 
     private
       # Use callbacks to share common setup or constraints between actions.
@@ -71,10 +71,11 @@ module Api
         params.fetch(:user, {}).permit(:FirstName, :LastName, :Age, :MailAddress)
       end
 
-#      # Only allow a trusted parameter "white list" through.
-#      def set_delete_user
-#        @delete_user = params[:id]
-#      end
+      # Only allow a trusted parameter "white list" through.
+      def set_delete_user
+        @delete_user = params[:id]
+      end
+
 
   end
 end
