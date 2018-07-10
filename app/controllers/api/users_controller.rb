@@ -1,6 +1,6 @@
 module Api
   class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :do_inactive]
+    before_action :set_user, only: [:show, :update, :nullify]
 
     # GET /api/users
     def index
@@ -18,15 +18,16 @@ module Api
     def create
       @user = User.new(user_params)
       if @user.FirstName.blank? || @user.LastName.blank? || @user.Age.blank? || @user.MailAddress.blank? 
-        response_bad_request
+        render json: @user.errors, status: :bad_request
       else
         if User.exists?(FirstName: @user.FirstName,LastName: @user.LastName,MailAddress: @user.MailAddress)
-          response_conflict(:user)
+          render json: @user.errors, status: :conflict
         else
           if @user.save
-            response_success(:user, :create)
+            #render json: @user, status: :created, location: @user
+            render json: @user, status: :created, location: api_users_url(@user)
           else
-            response_internal_server_error
+            render json: @user.errors, status: :unprocessable_entity
           end
         end
       end
@@ -35,47 +36,34 @@ module Api
     # PATCH/PUT /api/users/:id
     def update
       if @user.update(user_params)
-        response_success(:user, :update)
+        render json: @user
       else
-        response_internal_server_error
+        render json: @user.errors, status: :unprocessable_entity
       end
     end
 
     # DELETE /api/users/:id
-    def do_inactive
-      if @user.do_inactive(@delete_user)
-        response_success(:user, :do_inactive)
+    def nullify
+      if @user.nullify(@user)
+        render json: @user
       else
-        response_internal_server_error
+        render json: @user.errors, status: :unprocessable_entity
       end
     end
 
-#    def do_inactive
-#      if @user.do_inactive
-#        response_success(:user, :update)
-#      else
-#        response_internal_server_error
-#      end
-#    end
-
     private
-      # Use callbacks to share common setup or constraints between actions.
+
       def set_user
-        @user = User.find_by(params[:id])
-        
-        response_not_found(:user) if @user.blank?
+        begin
+          @user = User.find params[:id]
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'User Not Found' }, status: :not_found
+        end
       end
 
-      # Only allow a trusted parameter "white list" through.
       def user_params
         params.fetch(:user, {}).permit(:FirstName, :LastName, :Age, :MailAddress)
       end
-
-      # Only allow a trusted parameter "white list" through.
-      def set_delete_user
-        @delete_user = params[:id]
-      end
-
 
   end
 end

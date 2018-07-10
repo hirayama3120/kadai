@@ -1,12 +1,9 @@
 class User < ApplicationRecord
 
-  def do_inactive(id)
-    user = User.find_by(id)      
-    user.DeleteFlag = 1
-    user.save
+  def nullify(user)
+    del_user = user
+    Rails.logger.debug user.inspect     
+    del_user.DeleteFlag = 1
+    del_user.save
   end
-
-#  def do_inactive
-#    update(DeleteFlag: 1)
-#  end
 end
