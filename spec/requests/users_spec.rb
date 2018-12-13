@@ -61,8 +61,7 @@ RSpec.describe 'Users', type: :request do
         post '/api/users', params: { user: attributes_for(:user) }
         expect(response).to be_successful
         expect(response.status).to eq 201
-        #expect(response.location).to eq 999
-        #got: "http://www.example.com/api/users.1" usersの後ろがスラッシュではなくピリオドになっている
+        expect(response.location).to eq api_url(1)
       end
  
       it 'Userレコード登録確認' do

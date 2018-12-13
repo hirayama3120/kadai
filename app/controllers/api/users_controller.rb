@@ -25,7 +25,7 @@ module Api
         else
           if @user.save
             #render json: @user, status: :created, location: @user
-            render json: @user, status: :created, location: api_users_url(@user)
+            render json: @user, status: :created, location: api_url(@user)
           else
             render json: @user.errors, status: :unprocessable_entity
           end
