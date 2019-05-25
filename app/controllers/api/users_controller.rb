@@ -1,5 +1,7 @@
 module Api
   class UsersController < ApplicationController
+    include Swagger::UsersApi
+    
     before_action :set_user, only: [:show, :update, :nullify]
 
     # GET /api/users

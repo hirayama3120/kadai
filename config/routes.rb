@@ -15,5 +15,7 @@ Rails.application.routes.draw do
     delete '/users/:id', to: 'users#nullify'
   end
 
+  get '/api-docs', to: 'api_docs#index'
+  
   root to: 'users#index'
 end
