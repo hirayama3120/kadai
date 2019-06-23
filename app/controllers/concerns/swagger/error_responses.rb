@@ -20,4 +20,15 @@ module Swagger::ErrorResponses
       end
     end
   end
+
+  module ConflictError
+    def self.extended(base)
+      base.response 409 do
+        key :description, 'Resource conflict'
+        schema do
+          key :'$ref', :ErrorOutput
+        end
+      end
+    end
+  end
 end

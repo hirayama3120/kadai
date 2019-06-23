@@ -9,7 +9,7 @@ module Swagger::ApiDocs
         key :version, '1.0.0'
         key :title, 'API Sample App'
         key :description, 'API Sample App'
-        contact name: '@kymmt90'
+        contact name: '@Sample'
         license name: 'MIT'
       end
       key :basePath, '/'

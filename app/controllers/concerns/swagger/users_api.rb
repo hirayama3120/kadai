@@ -34,6 +34,7 @@ module Swagger::UsersApi
         end
 
         extend Swagger::ErrorResponses::InvalidParameterError
+        extend Swagger::ErrorResponses::ConflictError
 
       end
     end
